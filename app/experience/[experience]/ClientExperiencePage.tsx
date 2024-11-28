@@ -29,7 +29,7 @@ export default function ClientExperiencePage({ experienceId }: ClientExperienceP
   const { resolvedLanguage } = useLanguage();
   const experiencesData = resolvedLanguage === 'es' ? experiencesDataES : experiencesDataEN;
 
-  const currentExperience = experiencesData.find((p) => p.id === experienceId);
+  const currentExperience = experiencesData.find((p: any) => p.id === experienceId);
 
   if (!currentExperience) {
     return <div>Error: Experience not found</div>;

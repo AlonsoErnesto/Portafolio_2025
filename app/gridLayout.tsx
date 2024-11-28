@@ -17,7 +17,9 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
   });
 
   const toggleNav = () => {
-    setBtnShowNav((prev) => !prev);
+    if (maxWidth768) {
+      setBtnShowNav((prev) => !prev);
+    }
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
           }`}
         >
           <div className="col-span-3 p-2 row-span-1">
-            <Link href="/">
+            <Link href="/" onClick={toggleNav}>
               <div
                 className={`relative w-full h-full border-gray-950 border-[1px] ${pathname === '/' ? 'dark:border-bluecleare' : 'dark:border-gray-500'}`}
               >
@@ -92,7 +94,7 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
               </div>
               <div className="relative h-full flex-grow pt-3 overflow-y-scroll">
                 {experiencesData.map((exp) => (
-                  <Link key={exp.id} href={`/experience/${exp.id}`}>
+                  <Link key={exp.id} href={`/experience/${exp.id}`} onClick={toggleNav}>
                     <div
                       className={` flex flex-row pl-1 gap-3 ${pathname === `/experience/${exp.id}` ? 'bg-selectBtn' : 'hover:bg-hoverBtn text-white hover:text-white'}`}
                     >
@@ -129,7 +131,7 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
               </div>
               <div className="relative h-full flex-grow pt-3 overflow-y-scroll">
                 {projectsData.map((project) => (
-                  <Link key={project.id} href={`/projects/${project.id}`}>
+                  <Link key={project.id} href={`/projects/${project.id}`} onClick={toggleNav}>
                     <p
                       className={` pl-3 gap-0 text-black dark:text-customGray
                       ${pathname === `/projects/${project.id}` ? 'bg-selectBtn text-gray-300' : 'hover:bg-hoverBtn hover:text-white'}`}
@@ -162,6 +164,7 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
                 {skillsData.map((skill) => (
                   <div key={skill.id}>
                     <Link
+                      onClick={toggleNav}
                       href={`/skills/${skill.id}`}
                       className={`flex items-center pl-2 ${pathname === `/skills/${skill.id}` ? 'bg-selectBtn text-gray-300' : 'hover:bg-hoverBtn hover:text-white'}`}
                     >
