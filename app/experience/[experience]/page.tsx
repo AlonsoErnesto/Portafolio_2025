@@ -15,7 +15,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ExperiencePage({ params }: ExperiencePageProps) {
+export default async function ExperiencePage({ params }: ExperiencePageProps) {
   const experience = experiencesDataEN.find((p) => p.id === params.experience);
 
   if (!experience) {

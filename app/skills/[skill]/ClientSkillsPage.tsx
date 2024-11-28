@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow as theme } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 // import { solarizedlight as themeLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
@@ -40,7 +40,7 @@ interface SkillCodeSnippetProps {
   };
 }
 
-const SkillCodeSnippet: React.FC<SkillCodeSnippetProps> = ({ skill }) => {
+const SkillCodeSnippet: React.FC<SkillCodeSnippetProps> = React.memo(({ skill }) => {
   const { theme } = useTheme();
   console.log('theme', theme);
   const [fileContent, setFileContent] = useState<string | null>(null);
@@ -53,9 +53,10 @@ const SkillCodeSnippet: React.FC<SkillCodeSnippetProps> = ({ skill }) => {
     return <div>Error: Project not found</div>;
   }
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useMemo(() => setIsClient(true), []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
   /* eslint-disable react-hooks/rules-of-hooks */
   useEffect(() => {
@@ -112,6 +113,6 @@ const SkillCodeSnippet: React.FC<SkillCodeSnippetProps> = ({ skill }) => {
       ) : null}
     </div>
   );
-};
+});
 
 export default SkillCodeSnippet;

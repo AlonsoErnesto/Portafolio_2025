@@ -7,7 +7,7 @@ import skillsData from '@/data/skillsData';
 import useLanguage from './hooks/useLanguage';
 import experiencesData from '@/data/experienceData';
 import { useMediaQuery } from 'react-responsive';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function GridLayout({ children }: { children: React.ReactNode }) {
   const { resolvedLanguage } = useLanguage();
@@ -29,9 +29,9 @@ export default function GridLayout({ children }: { children: React.ReactNode }) 
   }, [maxWidth768]);
 
   const pathname = usePathname();
-  const idPr = pathname?.match(/\/projects\/([^/]+)/)?.[1] || '1';
-  const idEx = pathname?.match(/\/experience\/([^/]+)/)?.[1] || '1';
-  const idSk = pathname?.match(/\/skills\/([^/]+)/)?.[1] || '1';
+  const idPr = pathname?.match(/\/projects\/([^/]+)/)?.[1] || 1;
+  const idEx = pathname?.match(/\/experience\/([^/]+)/)?.[1] || 1;
+  const idSk = pathname?.match(/\/skills\/([^/]+)/)?.[1] || 1;
   return (
     <div className="relative h-[100vh] w-full text-[16px] p-3 dark:text-customGray text-gray-950  ">
       <div className="flex h-full w-full">

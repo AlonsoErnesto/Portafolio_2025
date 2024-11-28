@@ -6737,9 +6737,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.41":
-  version: 1.5.65
-  resolution: "electron-to-chromium@npm:1.5.65"
-  checksum: 4a112a038771c415f77e88fb3e3d929ceac4600b4612c55eb5d955a37c24842725f00c14f0f6838fd46edd832351c702b24c592c544d2e1e630d084f9df9f275
+  version: 1.5.66
+  resolution: "electron-to-chromium@npm:1.5.66"
+  checksum: efa0381d53c5cb0c2916c791b09b54720f3f2a7e78904885f9cc5f642fcbf4a58833fe7a1b327ce8a94a43cf1fe1bdf71425a933d51664ccd4e4d3c8f61d5cca
   languageName: node
   linkType: hard
 
@@ -10166,7 +10166,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -12483,15 +12483,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-react-dom@rc:
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:rc":
+  version: 19.0.0-rc.1
+  resolution: "react-dom@npm:19.0.0-rc.1"
   dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.2
+    scheduler: 0.25.0-rc.1
   peerDependencies:
-    react: ^18.3.1
-  checksum: 298954ecd8f78288dcaece05e88b570014d8f6dce5db6f66e6ee91448debeb59dcd31561dddb354eee47e6c1bb234669459060deb238ed0213497146e555a0b9
+    react: 19.0.0-rc.1
+  checksum: 63217365bfba7c558bd68bad46af10a76fbe241154f0f7fedb34820d6841ff340396e506cc84c29d96dccea339f14bf8782d729e803437b475541edf550d54ab
   languageName: node
   linkType: hard
 
@@ -12543,12 +12542,10 @@ react-dom@rc:
   languageName: node
   linkType: hard
 
-react@rc:
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: a27bcfa8ff7c15a1e50244ad0d0c1cb2ad4375eeffefd266a64889beea6f6b64c4966c9b37d14ee32d6c9fcd5aa6ba183b6988167ab4d127d13e7cb5b386a376
+"react@npm:rc":
+  version: 19.0.0-rc.1
+  resolution: "react@npm:19.0.0-rc.1"
+  checksum: 3b70c4d16038cc869a91a6a243414706ba3f012e0043c07a47d49ab09837421da65ef1c842d80039344513aafc844d33f146e175cd72e41bef83a4e3ce1b08f3
   languageName: node
   linkType: hard
 
@@ -13602,12 +13599,10 @@ react@rc:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 3e82d1f419e240ef6219d794ff29c7ee415fbdc19e038f680a10c067108e06284f1847450a210b29bbaf97b9d8a97ced5f624c31c681248ac84c80d56ad5a2c4
+"scheduler@npm:0.25.0-rc.1":
+  version: 0.25.0-rc.1
+  resolution: "scheduler@npm:0.25.0-rc.1"
+  checksum: 03b56e352ab835ee4d2e55525380f622807e6d2407291474e21bdb70e8135da0e0d7bec3e86c7b0d68d83ffa6645799e947ce34e1bc91c982f4d6e5285cfedcd
   languageName: node
   linkType: hard
 
@@ -15345,15 +15340,15 @@ react@rc:
   linkType: hard
 
 "which-typed-array@npm:^1.1.14, which-typed-array@npm:^1.1.15":
-  version: 1.1.15
-  resolution: "which-typed-array@npm:1.1.15"
+  version: 1.1.16
+  resolution: "which-typed-array@npm:1.1.16"
   dependencies:
     available-typed-arrays: ^1.0.7
     call-bind: ^1.0.7
     for-each: ^0.3.3
     gopd: ^1.0.1
     has-tostringtag: ^1.0.2
-  checksum: 65227dcbfadf5677aacc43ec84356d17b5500cb8b8753059bb4397de5cd0c2de681d24e1a7bd575633f976a95f88233abfd6549c2105ef4ebd58af8aa1807c75
+  checksum: 903d398ec234d608011e1df09af6c004e66965bb24d5e1a82856cba0495fa6389ae393d1c9d5411498a9cba8e61b2e39a8e8be7b3005cbeadd317f772b1bdaef
   languageName: node
   linkType: hard
 

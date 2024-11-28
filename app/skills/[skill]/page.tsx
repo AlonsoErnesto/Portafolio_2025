@@ -8,17 +8,13 @@ type SkillPageProps = {
   };
 };
 
-export async function generateStaticParams() {
-  return skillsData.map((skill) => ({
-    skill: skill.id,
-  }));
-}
+export default async function SkillPage({ params }: SkillPageProps) {
+  const skill = await params.skill;
+  const skillData = skillsData.find((p) => p.id === skill);
 
-export default function SkillPage({ params }: SkillPageProps) {
-  const skill = skillsData.find((p) => p.id === params.skill);
-  if (!skill) {
+  if (!skillData) {
     notFound();
   }
 
-  return <ClientSkillsPage skill={skill} />;
+  return <ClientSkillsPage skill={skillData} />;
 }
