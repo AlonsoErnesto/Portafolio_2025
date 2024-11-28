@@ -1,0 +1,43 @@
+type Profile {
+  id: ID!
+  name: String!
+  experience: Int!
+  skills: [String!]!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  description: String
+  status: ProjectStatus!
+}
+
+enum ProjectStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+union ProfileResult = Profile | Unauthenticated | ServerError
+union ProjectResult = Project | ProjectNotFound | ServerError
+
+input CreateProjectInput {
+  name: String!
+  description: String
+  status: ProjectStatus = PENDING
+}
+
+type Query {
+  getProfile(id: ID!): ProfileResult!
+  getProject(id: ID!): ProjectResult!
+}
+
+type Mutation {
+  createProject(input: CreateProjectInput!): Project!
+  updateProject(id: ID!, input: CreateProjectInput!): Project!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
