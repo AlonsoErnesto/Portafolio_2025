@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon/components';
+const lang = Astro.url.pathname.split('/')[1];
+let content = '';
+if (lang === 'es') {
+  content = 'Este es el contenido en español';
+} else if (lang === 'en') {
+  content = 'This is the content in English';
+}
+---
+
+<button
+  type="button"
+  class="flex items-center justify-center dark:text-gray-100 rounded"
+  id="language-toggle"
+  onclick={`window.location.href = getOppositeLanguagePath('${lang}')`}
+>
+  {
+    lang === 'es' && (
+      <Icon
+        name="material-symbols-light:language-us"
+        width="35"
+        height="35"
+        id="language-icon"
+      />
+    )
+  }
+  {
+    lang === 'en' && (
+      <Icon
+        name="material-symbols-light:language-spanish"
+        width="35"
+        height="35"
+        id="language-icon"
+      />
+    )
+  }
+</button>
+<script is:inline>
+  const getOppositeLanguagePath = (currentLang) => {
+    const oppositeLang = currentLang === 'es' ? 'en' : 'es';
+    return window.location.pathname.replace(
+      /^\/(es|en)/,
+      `/${oppositeLang}`
+    );
+  };
+</script>

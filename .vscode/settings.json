@@ -1,0 +1,20 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  // "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "biome.biome-vscode",
+  "files.autoSave": "onWindowChange",
+  "files.associations": {
+    "*.astro": "astro",
+    "*.ts": "typescript",
+  },
+  "eslint.validate": ["javascript", "typescript", "astro"],
+  "eslint.alwaysShowStatus": true,
+  "prettier.requireConfig": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  }
+}

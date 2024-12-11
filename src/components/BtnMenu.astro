@@ -1,0 +1,46 @@
+---
+import { Icon } from 'astro-icon/components';
+import GridListLinks from './GridListLinks.astro';
+---
+
+<div class="md:hidden fixed right-10 z-50">
+  <Icon id="menu-open-icon" name="ri:menu-line" size={40} />
+  <div id="menu-content" class="hidden">
+    <div
+      class="fixed right-7 top-[50px] w-[60vw] bg-white shadow-lg max-sm:w-[70vw] max-510mp:w-[80%]"
+    >
+      <div
+        class="absolute right-10 top-[10px] z-20 border border-black bg-white rounded-full"
+      >
+        <Icon
+          id="menu-close-icon"
+          name="ri:close-fill"
+          size={25}
+          color="black"
+        />
+      </div>
+      <GridListLinks />
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuOpenIcon = document.getElementById(
+      'menu-open-icon'
+    );
+    const menuCloseIcon = document.getElementById(
+      'menu-close-icon'
+    );
+    const menuContent =
+      document.getElementById('menu-content');
+    if (menuOpenIcon && menuCloseIcon && menuContent) {
+      menuOpenIcon.addEventListener('click', () => {
+        menuContent.classList.remove('hidden');
+      });
+      menuCloseIcon.addEventListener('click', () => {
+        menuContent.classList.add('hidden');
+      });
+    }
+  });
+</script>

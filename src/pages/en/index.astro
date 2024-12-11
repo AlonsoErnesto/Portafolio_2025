@@ -1,0 +1,183 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '@/styles/global.css';
+import { Icon } from 'astro-icon/components';
+import GridMaster from '@/layouts/GridMaster.astro';
+import PresentationList from '@/data/EN/Presentation';
+import ThemeSwitcher from '@/components/ThemeSwitcher.astro';
+import type { Verse } from '@/interface/verce';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import { parseDescription } from '@/utils/parseDescription';
+import BtnMenu from '@/components/BtnMenu.astro';
+
+export async function getStaticPaths() {
+  return PresentationList.map((prs) => ({
+    params: { id: prs.id },
+  }));
+}
+const { id } = Astro.params;
+
+const presentation =
+  PresentationList.find((exp) => exp.id === id) ||
+  PresentationList[0];
+
+if (!presentation) {
+  return Astro.redirect('/404');
+}
+
+async function fetchData(): Promise<Verse> {
+  const response = await fetch(
+    'https://labs.bible.org/api/?passage=random&type=json'
+  );
+  const data = await response.json();
+  return data[0];
+}
+
+const message = await fetchData();
+
+const { title, title_desc, href } = presentation;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>ernesto.dev</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <GridMaster>
+      <div class="overflow-y-auto px-12 py-5 max-sm:px-3">
+        <div class="flex justify-between items-center py-3">
+          <div class="max-lg:hidden">
+            <button
+              onclick={`window.location.reload()`}
+              class="hover:text-white"
+            >
+              C:/program files/dev/Ernesto
+            </button>
+          </div>
+          <button
+            onclick={`window.location.reload()`}
+            class="lg:hidden hover:text-white"
+          >
+            dev/Ernesto
+          </button>
+          <div
+            class="grid grid-flow-col place-items-center gap-3 max-md:hidden"
+          >
+            <span class="cursor-pointer">
+              <button
+                class="text-[18px]"
+                onclick="window.open('/static/pdf/CV-2025.pdf', '_blank');"
+              >
+                Resume
+              </button>
+            </span>
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+          </div>
+          <BtnMenu />
+        </div>
+        <div>
+          <div class="p-3" id={id}>
+            <slot name="before" />
+            <div class="py-8">
+              <h2 class="text-2xl font-bold text-center">
+                {title}
+              </h2>
+              <p class="italic text-center">{title_desc}</p>
+              <div
+                class="w-full pt-10 flex justify-between max-xl:flex-col max-xl:items-center max-md:hidden"
+              >
+                {
+                  href?.map((i) => (
+                    <button
+                      onclick={`window.open('${i}', '_blank')`}
+                      class="text-gray-500 hover:text-white"
+                    >
+                      {i.replace(/^https?:\/\//, '')}
+                    </button>
+                  ))
+                }
+              </div>
+              <div
+                class="w-full pt-10 flex justify-center gap-8 md:hidden"
+              >
+                {
+                  href?.map((i) => {
+                    let icon;
+                    if (i.includes('github.com')) {
+                      icon = 'mdi:github';
+                    } else if (i.includes('linkedin.com')) {
+                      icon = 'mdi:linkedin';
+                    } else if (i.includes('linktr.ee')) {
+                      icon = 'simple-icons:linktree';
+                    }
+
+                    return (
+                      <button
+                        onclick={`window.open('${i}', '_blank')`}
+                        class="text-gray-500 hover:text-white"
+                      >
+                        <Icon
+                          name={icon}
+                          width="32"
+                          height="32"
+                        />
+                      </button>
+                    );
+                  })
+                }
+              </div>
+            </div>
+            <ul class="list-disc list-inside">
+              {
+                PresentationList[0].description.map(
+                  (desc, index) => (
+                    <p
+                      set:html={parseDescription(desc)}
+                      class="py-2"
+                    />
+                  )
+                )
+              }
+            </ul>
+          </div>
+        </div>
+        <div
+          class="relative w-full py-[.5rem] px-[2rem] border border-bluecleare mt-[2rem] z-10"
+        >
+          <img
+            class="absolute -left-5 -top-7 transition duration-300 hover:brightness-200 cursor-pointer"
+            src="/static/images/btn.svg"
+            width={40}
+            height={40}
+            onclick="handleClick()"
+          />
+          <div>
+            {
+              message ? (
+                <>
+                  <p class="italic">{message.text}</p>
+                  <p class="italic text-BlueText font-bold text-[13px]">
+                    {message.bookname} {message.chapter}:
+                    {message.verse}
+                  </p>
+                </>
+              ) : (
+                <p>Loading...</p>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </GridMaster>
+  </body>
+</html>

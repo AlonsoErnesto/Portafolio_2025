@@ -1,0 +1,111 @@
+---
+import ProjectList from '@/ES/Project';
+import { Icon } from 'astro-icon/components';
+import { parseDescription } from '@/utils/parseDescription';
+import '@/styles/global.css';
+import GridListLinks from '@/components/GridListLinks.astro';
+
+export async function getStaticPaths() {
+  return ProjectList.map((prj) => ({
+    params: { id: prj.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+const proyect = ProjectList.find((prj) => prj.id === id);
+
+if (!proyect) {
+  return Astro.redirect('/404');
+}
+
+const {
+  title,
+  techs,
+  title_desc,
+  href,
+  description,
+  imgSrc,
+} = proyect;
+---
+
+<div class="md:hidden fixed right-10 z-50 top-14" id="menu">
+  <Icon id="menu-open-icon" name="ri:menu-line" size={40} />
+  <div id="menu-content" class="hidden">
+    <div
+      class="fixed right-7 top-[50px] w-[60vw] bg-white shadow-lg max-sm:w-[70vw] max-510mp:w-[80%]"
+    >
+      <div
+        class="absolute right-10 top-[10px] z-20 border border-black bg-white rounded-full"
+      >
+        <Icon
+          id="menu-close-icon"
+          name="ri:close-fill"
+          size={25}
+          color="black"
+        />
+      </div>
+      <GridListLinks />
+    </div>
+  </div>
+</div>
+<div class="p-10 relative max-510mp:p-3" id={id}>
+  <div
+    class="absolute w-32 h-10 right-10 border-2 bg-black dark:bg-transparent text-white dark:border-white grid place-items-center hover:bg-selectBtn transition-colors duration-200 dark:max-1050:hidden max-1050:hidden"
+  >
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      DEMO
+    </a>
+  </div>
+  <h2 class="text-[32px] font-bold text-PurpleText">
+    {title}
+  </h2>
+  <p class="text-gray-500">{techs}</p>
+  <p class="italic text-BlueText">{title_desc}</p>
+  <div
+    class="w-40 h-10 border-2 bg-black mt-4 dark:bg-transparent text-white dark:border-white grid place-items-center hover:bg-selectBtn transition-colors duration-200 dark:1050:hidden 1050:hidden"
+  >
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      DEMO
+    </a>
+  </div>
+  <div class="my-8 list-disc list-inside">
+    {
+      description.map((desc) => (
+        <p set:html={parseDescription(desc)} class="py-3" />
+      ))
+    }
+  </div>
+  <div>
+    {
+      imgSrc?.map((img) => (
+        <img
+          src={img}
+          alt="description"
+          class="border p-3 border-bluecleare"
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script is:inline>
+  document
+    .getElementById('menu')
+    .addEventListener('click', () => {
+      const menuContent =
+        document.getElementById('menu-content');
+      menuContent.classList.remove('hidden');
+      menuContent.addEventListener('click', () => {
+        menuContent.classList.add('hidden');
+      });
+    });
+</script>

@@ -1,0 +1,76 @@
+---
+import ExperienceList from '@/EN/Experience';
+import '@/styles/global.css';
+import { parseDescription } from '@/utils/parseDescription';
+import { Icon } from 'astro-icon/components';
+import GridListLinks from '@/components/GridListLinks.astro';
+
+export async function getStaticPaths() {
+  return ExperienceList.map((exp) => ({
+    params: { id: exp.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+const experience = ExperienceList.find(
+  (exp) => exp.id === id
+);
+if (!experience) {
+  return Astro.redirect('/404');
+}
+
+const { title, position, title_des, date, description } =
+  experience;
+---
+
+<div class="p-10 max-510mp:p-3">
+  <div class="md:hidden fixed right-10 z-50" id="menu">
+    <Icon
+      id="menu-open-icon"
+      name="ri:menu-line"
+      size={40}
+    />
+    <div id="menu-content" class="hidden">
+      <div
+        class="fixed right-7 top-[50px] w-[60vw] bg-white shadow-lg max-sm:w-[70vw] max-510mp:w-[80%]"
+      >
+        <div
+          class="absolute right-10 top-[10px] z-20 border border-black bg-white rounded-full"
+        >
+          <Icon
+            id="menu-close-icon"
+            name="ri:close-fill"
+            size={25}
+            color="black"
+          />
+        </div>
+        <GridListLinks />
+      </div>
+    </div>
+  </div>
+  <h2 class="text-xl font-bold text-PurpleText">
+    {title_des}
+  </h2>
+  <p class="italic text-BlueText">{title}</p>
+  <p class="text-gray-500">{date}</p>
+  <div class="mt-4 list-disc list-inside">
+    {
+      description.map((desc) => (
+        <p set:html={parseDescription(desc)} class="py-3" />
+      ))
+    }
+  </div>
+</div>
+<script is:inline>
+  document
+    .getElementById('menu')
+    .addEventListener('click', () => {
+      const menuContent =
+        document.getElementById('menu-content');
+      menuContent.classList.remove('hidden');
+      menuContent.addEventListener('click', () => {
+        menuContent.classList.add('hidden');
+      });
+    });
+</script>

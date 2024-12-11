@@ -1,0 +1,111 @@
+---
+import SkillList from '@/EN/Skill';
+import '@/styles/global.css';
+import { highlightCode } from '@/utils/highlight';
+import { parseDescription } from '@/utils/parseDescription';
+import { Icon } from 'astro-icon/components';
+import GridListLinks from '@/components/GridListLinks.astro';
+
+export async function getStaticPaths() {
+  return SkillList.map((skl) => ({
+    params: { id: skl.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+const skill = SkillList.find((skl) => skl.id === id);
+
+if (!skill) {
+  return Astro.redirect('/404');
+}
+
+const {
+  title,
+  icon,
+  language,
+  description,
+  directionFile,
+  relatedTechnologies,
+} = skill;
+
+const highlightedCode =
+  directionFile && language ? await highlightCode(directionFile, language) : '';
+---
+
+<div class="md:hidden fixed right-10 z-50 top-14" id="menu">
+  <Icon
+    id="menu-open-icon"
+    name="ri:menu-line"
+    size={40}
+  />
+  <div id="menu-content" class="hidden">
+    <div
+      class="fixed right-7 top-[50px] w-[60vw] bg-white shadow-lg max-sm:w-[70vw] max-510mp:w-[80%]"
+    >
+      <div
+        class="absolute right-10 top-[10px] z-20 border border-black bg-white rounded-full"
+      >
+        <Icon
+          id="menu-close-icon"
+          name="ri:close-fill"
+          size={25}
+          color="black"
+        />
+      </div>
+      <GridListLinks />
+    </div>
+  </div>
+</div>
+<div class="p-10 max-510mp:p-3" id={id}>
+  <slot name="before" />
+  <h2 class="text-[32px] font-bold text-PurpleText">{title}</h2>
+  <p class="-mt-2 text-gray-500 max-510mp:hidden">{directionFile}</p>
+  <div class="mt-4 list-disc list-inside">
+    {
+      description.map((desc) => (
+        <p set:html={parseDescription(desc)} class="py-2" />
+      ))
+    }
+  </div>
+  <div class="flex flex-wrap  justify-center gap-5 mt-6 list-disc list-inside">
+    {
+      relatedTechnologies.map((desc) => (
+        <span class="text-BlueText text-[17px] flex-grow-0 basis-[200px]" set:html=`[${desc}]` />
+      ))
+    }
+  </div>
+  <div class="mt-10 list-disc list-inside">
+    <div>
+      {
+        highlightedCode ? (
+          <div
+            class="shiki border border-BlueText p-5 overflow-auto"
+            set:html={highlightedCode}
+          />
+        ) : (
+          ''
+        )
+      }
+    </div>
+  </div>
+</div>
+<script type="module">
+  if (typeof window !== 'undefined') {
+    const theme = window.localStorage.getItem('theme');
+    document.cookie = `${theme}`;
+  }
+</script>
+
+<script is:inline>
+  document
+    .getElementById('menu')
+    .addEventListener('click', () => {
+      const menuContent =
+        document.getElementById('menu-content');
+      menuContent.classList.remove('hidden');
+      menuContent.addEventListener('click', () => {
+        menuContent.classList.add('hidden');
+      });
+    });
+</script>

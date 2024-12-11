@@ -1,0 +1,21 @@
+{
+  "extends": ["biome:recommended"],
+  "rules": {
+    "biome/biome": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+    "prettier/prettier": "error",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "trailing-comma": ["error", "all"]
+  },
+  "plugins": ["prettier"],
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "rules": {
+        "biome/biome": "error",
+        "no-unused-vars": "warn"
+      }
+    }
+  ]
+}
